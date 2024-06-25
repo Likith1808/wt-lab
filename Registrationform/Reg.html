@@ -1,0 +1,47 @@
+<html>
+<body>
+<center>
+<fieldset>
+<legend>Registration</legend>
+<form action="Database" method="get" onSubmit="return fun()">
+    <pre>
+        Name             : <input type="text" name="user" size="20"><br>
+        Password         : <input type="password" name="pwd" size="20"><br>
+        E-mail           : <input type="text" name="email" size="20"><br>
+        Phone Number     : <input type="text" name="ph" size="20"><br>
+        Sex              : 
+                         <input type="radio" name="sex" value="male"> Male 
+                         <input type="radio" name="sex" value="female"> Female<br>
+        Date of Birth    : 
+                         <select name="dob_day">
+                             <option value="1">1</option>
+                             <option value="2">2</option>
+                             <option value="3">3</option>
+                             <!-- Add options up to 31 -->
+                         </select>
+                         <select name="dob_month">
+                             <option value="January">January</option>
+                             <option value="February">February</option>
+                             <option value="March">March</option>
+                             <!-- Add options for all 12 months -->
+                         </select>
+                         <select name="dob_year">
+                             <option value="2024">2024</option>
+                             <option value="2023">2023</option>
+                             <option value="2022">2022</option>
+                             <!-- Add options for a range of years -->
+                         </select><br>
+        Languages known  : 
+                         <input type="checkbox" name="language" value="English"> English
+                         <input type="checkbox" name="language" value="Telugu"> Telugu
+                         <input type="checkbox" name="language" value="Hindi"> Hindi
+                         <input type="checkbox" name="language" value="Tamil"> Tamil<br>
+        Address          : <textarea name="address" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Register">
+    </pre>
+</form>
+</fieldset>
+</center>
+</body>
+<script src="valid.js"></script>
+</html>
