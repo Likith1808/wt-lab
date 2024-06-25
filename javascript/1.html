@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Click Counter</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  #clickCount {
+    margin-top: 20px;
+    font-size: 24px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Click Counter</h1>
+
+<button id="clickButton">Click me!</button>
+<p id="clickCount">Click count: 0</p>
+
+<script>
+  // Select the button element and count display element
+  const button = document.getElementById('clickButton');
+  const countDisplay = document.getElementById('clickCount');
+
+  // Initialize counter
+  let clickCount = 0;
+
+  // Add click event listener to the button
+  button.addEventListener('click', function() {
+    // Increment the counter
+    clickCount++;
+
+    // Update the count display text
+    countDisplay.textContent = `Click count: ${clickCount}`;
+  });
+</script>
+
+</body>
+</html>
