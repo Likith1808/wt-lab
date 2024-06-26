@@ -4,6 +4,10 @@
 <head>
     <title>Online Book Store</title>
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
         .top-frame {
             background-color: #f0f0f0;
@@ -11,42 +15,85 @@
             text-align: center;
         }
 
+        .logo {
+            float: left;
+        }
+
+        .top-links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .left-frame {
+            width: 20%;
+            height: 100vh;
+            background-color: #f7f7f7;
+            padding: 10px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 120px;
+        }
+
+        .left-frame a {
+            display: block;
+            margin: 10px 0;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .right-frame {
+            margin-left: 20%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
     </style>
-    
 </head>
 
 <body>
     <div class="top-frame">
-    
-        <img src="C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Winter.jpg" alt="Logo"
-            class="logo" align=left height=100 width=100>
+        <img src="C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Winter.jpg" alt="Logo" class="logo" height="100" width="100">
         <h1>Online Book Store</h1>
-        
         <div class="top-links">
-            <a href="index.html">Home</a>
-            <a href="login.html">Login</a>
-            <a href="registration.html">Registration</a>
-            <a href="catalogue.html">Catalogue</a>
-            <a href="cart.html">Cart</a>
+            <a href="index.html" target="right-frame">Home</a>
+            <a href="login.html" target="right-frame">Login</a>
+            <a href="registration.html" target="right-frame">Registration</a>
+            <a href="catalogue.html" target="right-frame">Catalogue</a>
+            <a href="cart.html" target="right-frame">Cart</a>
         </div>
-        
     </div>
-    
-    
-<a href=cse.html target="f3"><h3>CSE</h3> </a><br>
 
-<a href=ece.html target="f3"><h3>ECE</h3></a><br>
+    <div class="left-frame">
+        <a href="cse.html" target="right-frame">CSE</a>
+        <a href="ece.html" target="right-frame">ECE</a>
+        <a href="eee.html" target="right-frame">EEE</a>
+        <a href="civil.html" target="right-frame">Civil</a>
+    </div>
 
-<a href=eee.html target="f3"><h3>EEE</h3></a><br>
+    <div class="right-frame" id="right-frame">
+        <h2 align="center">Online Book Store Information</h2>
+        <p align="center">
+            <font face="times new roman" color="green">
+                This is the online book store developed by students of SVIST. It contains book catalogues of various branches like CSE, ECE, EEE, Civil.
+            </font>
+        </p>
+    </div>
 
-<a href=civil.html target="f3"><h3>Civil</h3></a>
+    <script>
+        document.querySelectorAll('.left-frame a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.getElementById('right-frame').innerHTML = `<iframe src="${this.getAttribute('href')}" style="width: 100%; height: 100vh; border: none;"></iframe>`;
+            });
+        });
 
+        document.querySelectorAll('.top-links a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.getElementById('right-frame').innerHTML = `<iframe src="${this.getAttribute('href')}" style="width: 100%; height: 100vh; border: none;"></iframe>`;
+            });
+        });
+    </script>
 </body>
-
-
-<p>
-    <h2 align="center"> <font face="times new roman" color="green">Online Book Store Information</font></h2>
-    <h3><font face="monotype corsiva" color="blue">This is the online book store developed by students of SVIST. It contains book catalogues of various branches like CSE, ECE, EEE, Civil.</font></h3>
-</p>
 
 </html>
