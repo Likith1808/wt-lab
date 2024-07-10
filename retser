@@ -1,0 +1,52 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/ServletJdbc")
+public class ServletJdbc extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", "Lalitha@123");
+
+            Statement st = con.createStatement();
+
+            ResultSet rs = st.executeQuery("SELECT id, ename, sal FROM user");
+
+            out.print("Data from MySQL sys Database, User Table:<br/>");
+            out.print("ID &emsp; Name &emsp; Salary<br/>");
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String ename = rs.getString("ename");
+                double sal = rs.getDouble("sal");
+
+                out.print(id + " &emsp; " + ename + " &emsp; " + sal + "<br/>");
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            out.print("Error: " + e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            out.print("Error: " + e.getMessage());
+        } finally {
+            out.close();
+        }
+    }
+}
