@@ -1,52 +1,53 @@
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Retrieve User Data</title>
+</head>
+<body>
+    <form method="get">
+        Enter User Id: <input type="text" name="id"><br>
+        <input type="submit" value="Go">
+    </form>
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+    <%@ page import="java.sql.*" %>
+    <%
+        String s = request.getParameter("id");
 
-@WebServlet("/ServletJdbc")
-public class ServletJdbc extends HttpServlet {
+        if (s != null && !s.trim().equals("")) {
+            int id = Integer.parseInt(s);
+            Connection con = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", "Lalitha@123");
+                ps = con.prepareStatement("SELECT * FROM user WHERE id = ?");
+                ps.setInt(1, id);
+                rs = ps.executeQuery();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", "Lalitha@123");
-
-            Statement st = con.createStatement();
-
-            ResultSet rs = st.executeQuery("SELECT id, ename, sal FROM user");
-
-            out.print("Data from MySQL sys Database, User Table:<br/>");
-            out.print("ID &emsp; Name &emsp; Salary<br/>");
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String ename = rs.getString("ename");
-                double sal = rs.getDouble("sal");
-
-                out.print(id + " &emsp; " + ename + " &emsp; " + sal + "<br/>");
+                if (rs.next()) {
+                    out.print("ID: " + rs.getInt("id") + "<br>");
+                    out.print("Name: " + rs.getString("ename") + "<br>");
+                    out.print("Salary: " + rs.getDouble("sal") + "<br>");
+                } else {
+                    out.print("No user found with ID: " + id);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                out.print("Error: " + e.getMessage());
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (ps != null) ps.close();
+                    if (con != null) con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            out.print("Error: " + e.getMessage());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            out.print("Error: " + e.getMessage());
-        } finally {
-            out.close();
+        } else if (s != null) {
+            out.print("Please enter an id");
         }
-    }
-}
+    %>
+</body>
+</html>
