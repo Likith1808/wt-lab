@@ -7,33 +7,43 @@
 <title>Retrieve Data from MySQL using JSP</title>
 </head>
 <body>
-<%@page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%
-ResultSet rs= null;
-Connection con=null;
-PreparedStatement ps= null;
+ResultSet rs = null;
+Connection con = null;
+PreparedStatement ps = null;
 
-String query= "select * from user";
+String query = "SELECT * FROM user";
 
-try{
-	Class.forName("com.mysql.jdbc.Driver");
-	con=DriverManager.getConnection("jdbc:mysql://localhost:3306//jsp","root","root");
-	ps=con.prepareStatement(query);
-	rs=ps.executeQuery();
-	
-	while(rs.next())
-	{
-		out.print("ID"+" "+"Name"+" "+"email");
-		out.print(rs.getInt(1)+" ");
-		out.print(rs.getString(2)+" ");
-		out.print(rs.getString(3));
-	}
-	
-}
-catch(Exception e){
-	out.print(e);
+try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_db", "root", "Lalitha@123");
+    ps = con.prepareStatement(query);
+    rs = ps.executeQuery();
+
+    out.print("<table border='1'>");
+    out.print("<tr><th>ID</th><th>Name</th><th>Salary</th></tr>");
+
+    while (rs.next()) {
+        out.print("<tr>");
+        out.print("<td>" + rs.getInt("id") + "</td>");
+        out.print("<td>" + rs.getString("ename") + "</td>");
+        out.print("<td>" + rs.getDouble("sal") + "</td>");
+        out.print("</tr>");
+    }
+
+    out.print("</table>");
+} catch (Exception e) {
+    out.print("Error: " + e.getMessage());
+} finally {
+    try {
+        if (rs != null) rs.close();
+        if (ps != null) ps.close();
+        if (con != null) con.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
 }
 %>
-
 </body>
 </html>
