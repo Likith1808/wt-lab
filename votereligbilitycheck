@@ -1,0 +1,49 @@
+Submit B package lalitha;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+public class Voters extends HttpServlet {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		 //set response content type
+        res.setContentType("text/html");
+        //get printWrite obj
+        PrintWriter pw = res.getWriter();
+        //read form data from page as request parameter
+        String name = req.getParameter("name");
+        int age = Integer.parseInt(req.getParameter("age"));
+        if (age>=18)
+        {
+             pw.println("<font color='green' size='4'>"+name+" you are eligible to vote</font>");
+        }
+        else
+             pw.println("<font color='red' size='4'>"+name+" you are not eligible to vote</font>");
+        //add hyperlink to dynamic page
+        pw.println("<br><br><a href= 'index.html'>Home</a>");
+        //close the stream
+        pw.close();
+   }
+}
+//voter.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action= "Voters" method="get">
+<fieldset style="width:20%; background-color:#80ffcc">
+<table>
+<tr><td>Name</td><td><input type="text" name="name"></td></tr>
+<tr><td>Age</td><td><input type="text" name="age"></td></tr>
+<tr><td></td><td><input type = "submit" value="check voting eligibility"></td></tr>
+</table>
+</fieldset>
+</form>
+</body>
+</html>
