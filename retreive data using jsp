@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Retrieve Data from MySQL using JSP</title>
+</head>
+<body>
+<%@page import="java.sql.*" %>
+<%
+ResultSet rs= null;
+Connection con=null;
+PreparedStatement ps= null;
+
+String query= "select * from user";
+
+try{
+	Class.forName("com.mysql.jdbc.Driver");
+	con=DriverManager.getConnection("jdbc:mysql://localhost:3306//jsp","root","root");
+	ps=con.prepareStatement(query);
+	rs=ps.executeQuery();
+	
+	while(rs.next())
+	{
+		out.print("ID"+" "+"Name"+" "+"email");
+		out.print(rs.getInt(1)+" ");
+		out.print(rs.getString(2)+" ");
+		out.print(rs.getString(3));
+	}
+	
+}
+catch(Exception e){
+	out.print(e);
+}
+%>
+
+</body>
+</html>
