@@ -34,20 +34,19 @@ public class ServletJdbc extends HttpServlet {
             st = con.createStatement();
             rs = st.executeQuery("SELECT * FROM user");
 
-            out.print("Data from MySQL user_db Database, user Table<br/>");
-            out.print("ID | Name | Salary<br/>");
+            out.print("<table border='1'>");
+            out.print("<tr><th>ID</th><th>Name</th><th>Salary</th></tr>");
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("ename");
-                double salary = rs.getDouble("sal");
-
-                out.print(id + " | " + name + " | " + salary + "<br/>");
+                out.print("<tr>");
+                out.print("<td>" + rs.getInt("id") + "</td>");
+                out.print("<td>" + rs.getString("ename") + "</td>");
+                out.print("<td>" + rs.getDouble("sal") + "</td>");
+                out.print("</tr>");
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            out.print("Error: " + e.getMessage());
-        } catch (SQLException e) {
+
+            out.print("</table>");
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             out.print("Error: " + e.getMessage());
         } finally {
@@ -61,3 +60,24 @@ public class ServletJdbc extends HttpServlet {
         }
     }
 }
+
+
+//xml file 
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+    http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
+    version="3.1">
+
+    <servlet>
+        <servlet-name>ServletJdbc</servlet-name>
+        <servlet-class>lalitha.ServletJdbc</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ServletJdbc</servlet-name>
+        <url-pattern>/ServletJdbc</url-pattern>
+    </servlet-mapping>
+
+</web-app>
